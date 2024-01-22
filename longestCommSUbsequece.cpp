@@ -1,14 +1,6 @@
-
-
-
-
-
-
-
 #include<iostream>
 using namespace std;
 #include<vector>
-
 
 
 
@@ -19,26 +11,23 @@ public:
         int length2 = text2.length();
         vector<int> next(length1+1,0);
         vector<int> curr(length1+1,0);
-        for(int i = length1-1;i>=0;i--){
-            for(int j = length2-1;j>=0;j--){
+        for(int j = length2-1;j>=0;j--){
+            for(int i = length1-1;i>=0;i--){            
                 if(text1[i]==text2[j]){
-                    curr[i][j] = 1+ next[i+1][j+1];
+                    curr[j] = 1+ next[j+1];
                 }
 
         //why add else statement in this case this thing i am not understand 
                 else{
-                    int notMatch1 = dp[i][j+1];
-                    int notMatch2 = dp[i+1][j];
-                    dp[i][j] = max(notMatch1,notMatch2);
+                    int notMatch1 = next[j];
+                    int notMatch2 = curr[j+1];
+                    curr[j] = max(notMatch1,notMatch2);
                 }
 
             }
+            next = curr;
         }
-        return dp[0][0]; 
-
-    }
-
-
+        return curr[0]; 
 
     }
     int solveusingTabulation(string text1,string text2){
